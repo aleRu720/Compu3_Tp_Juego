@@ -13,7 +13,9 @@ BusOut leds(PB_12,PB_13,PB_14,PB_15);
 ```
 ## Generación de Tiempos y leds aleatorios
 
-Se agrega la generación de tiempos aleatorios y leds aleatorios. Para que la función rand() genere números en un determinado intervalo se utiliza la siguiente formula:
+Se agrega la generación de tiempos aleatorios y leds aleatorios. 
+Antes de invocar a la función rand(), se debe llamar a la función srand(), pasandole como parámetro un valor. Esta función inicializa la "semilla" para generar los números con rand(). Es importante que el valor pasado a srand() sea siempre diferente, una forma de hacer esto es leer el valor del timer.
+Para que la función rand() genere números en un determinado intervalo se utiliza la siguiente formula:
 ```c
 int numeroAleatorio = rand() % (valorMaximo+1)+valorBase;
 ```
