@@ -7,8 +7,9 @@
 
 # Configuración del Poryecto
 # Configure aqui directorio del Proyecto antes de compilar
-PROJECTPATH = D:/FCAL_UNER/Docencia/Compu_3/Practicas_Compu_3/Ejercicios/JuegoTopos #D:\FCAL_UNER\Docencia\Compu_3\Practicas_Compu_3\Ejercicios\JuegoTopos\main.cpp
+PROJECTPATH = D:/FCAL_UNER/Docencia/Compu_3/Practicas_Compu_3/Repositorios/TPS/Compu3_Tp_Juego/JuegoTopos #D:\FCAL_UNER\Docencia\Compu_3\Practicas_Compu_3\Ejercicios\JuegoTopos\main.cpp
 
+#D:\FCAL_UNER\Docencia\Compu_3\Practicas_Compu_3\Repositorios\TPS\Compu3_Tp_Juego\JuegoTopos\main.cpp
 # Link para obtener el compilador
 # https://developer.arm.com/-/media/Files/downloads/gnu-rm/6-2017q2/gcc-arm-none-eabi-6-2017-q2-update-win32.zip?revision=d8809bf7-a431-49ee-98d5-0475d839f8f1?product=GNU%20Arm%20Embedded%20Toolchain,ZIP,,Windows,6-2017-q2-update
 # Configure aqui directorio del COMPILADOR ARM-GCC MBED para poder compilar 

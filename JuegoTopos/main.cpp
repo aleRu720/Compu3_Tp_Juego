@@ -1,6 +1,8 @@
 #include "mbed.h"
+#include <stdlib.h>
 
 #define TRUE    1
+#define FALSE   0
 
 /**
  * @brief Defino el intervalo entre lecturas para "filtrar" el ruido del Botón
@@ -12,6 +14,26 @@
  * 
  */
 #define NUMBUTT     4
+
+/**
+ * @brief Definición del tiempo base
+ * 
+ */
+#define BASETIME    100
+
+/**
+ * @brief Definición del valor máximo de tiempo
+ * 
+ */
+#define MAXTIME     1000
+
+/**
+ * @brief Definición del número máximo de leds
+ * NOTA: Como el 0 es muy esporádico, se genera  hasta 4 y se resta 1. Hay que controlar que el valor no sea 0.
+ */
+#define MAXLED      4
+
+
 /**
  * @brief Definiciones varias 
  * 
@@ -120,15 +142,37 @@ int tiempoMs=0; //!< variable donde voy a almacenar el tiempo del timmer una vez
 int main()
 {
     uint16_t buttonValueAux;
-    int beatTime=1;
+    int beatTime=0;
+    int randomTime=0, randomInterval=3000;
+    uint8_t randomLed=0;
+    uint16_t randomLedAux=0;
+    uint8_t randomFlag=FALSE;
+
     _sButton pulsador[NUMBUTT];
 
     miTimer.start();    
     inicializaPulsadores(pulsador);
-    hearBeat=0;
+    hearBeat=1;
  
     while(TRUE)
     {
+       if(!(pulsadores & 0x0009))
+       {
+            srand(miTimer.read_us());
+            randomFlag = TRUE;
+       }
+       
+        if(((miTimer.read_ms()-randomTime)>randomInterval) && randomFlag)
+        {
+            randomTime=miTimer.read_ms();
+            randomLedAux &= ~(1 << (randomLed)) ; 
+            leds=randomLedAux;
+            randomLed =  ((rand()%MAXLED+1)-1);
+            randomInterval = (rand()% (MAXTIME+1)+BASETIME);
+            randomLedAux |= 1 << (randomLed) ;
+            leds=randomLedAux;
+        }
+
        if ((miTimer.read_ms()-beatTime)>HEARBEATIME)
        {
            beatTime=miTimer.read_ms();
