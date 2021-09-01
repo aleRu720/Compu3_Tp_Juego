@@ -45,7 +45,6 @@
 #define NUMBEAT     4
 
 
-
 /**
  * @brief Enumeración que contiene los estados de la máquina de estados(MEF) que se implementa para 
  * el "debounce" 
@@ -79,9 +78,6 @@ typedef struct{
  * 
  */
 _eButtonState myButton;
-
-
-
 
 /**
  * @brief  Máquina de Estados Finitos(MEF)
@@ -156,12 +152,16 @@ int main()
  
     while(TRUE)
     {
-       if(!(pulsadores & 0x0009))
-       {
+        /// Utilizado para habilitar la generación de tiempos y leds aleatorios 0x0009 = 1001 me quedo con el valor del primero y el último botón
+        if(!(pulsadores & 0x0009))
+        {
             srand(miTimer.read_us());
             randomFlag = TRUE;
-       }
-       
+        }
+
+        /// Uso un Flag para habilitar la entrada a este if. randomTime(Variable para desplazarse por el timer)
+        /// randomInterval (Variable que almacena el tiempo aleatorio de encendido del led)
+        /// Al ingresar a la función apaga el led que estaba activo, genera un nuevo led y un nuevo tiempo. Al salir de la función prende el led elegido
         if(((miTimer.read_ms()-randomTime)>randomInterval) && randomFlag)
         {
             randomTime=miTimer.read_ms();
@@ -173,12 +173,14 @@ int main()
             leds=randomLedAux;
         }
 
+       /// Hearbeat, testigo de que el programa funciona 
        if ((miTimer.read_ms()-beatTime)>HEARBEATIME)
        {
            beatTime=miTimer.read_ms();
            hearbeat();
        }
        
+       /// Evaluamos las 4 teclas cada 40 ms
        if ((miTimer.read_ms()-tiempoMs)>INTERVAL)
        {
         tiempoMs=miTimer.read_ms();
@@ -250,7 +252,7 @@ void togleLed(_sButton * buttons){
 void inicializaPulsadores( _sButton * buttons){
 
     for(uint8_t index=0; index<NUMBUTT;index++){
-         buttons[index].mask=0;
+        buttons[index].mask=0;
         buttons[index].mask |= 1<<index ;
         buttons[index].index=index;
         buttons[index].ledState = OFF;
